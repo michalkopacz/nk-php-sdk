@@ -375,33 +375,58 @@ class NKService
     return $result;
   }
 
-  /**
-   * Dodaje na tablicy aktualnie zalogowanego użytkownika wpis o treści $content Dodatkowo możesz zawęzić widoczność
-   * wpisu wypisu wyłącznie dla znajomych użytkownika, ustawiając parametr $only_friends na true
-   *
-   * @since 1.1
-   *
-   * @param $content
-   * @param bool $only_friends
-   *
-   * @return bool
-   *
-   * @throws NKServiceInvalidParamsException
-   */
-  public function postActivity($content, $only_friends = false)
-  {
-    $length = strlen($content);
-    if ($length < 1) {
-      throw new NKServiceInvalidParamsException("Activity content is too short, it should have at least 1 char");
-    } elseif ($length > 500) {
-      throw new NKServiceInvalidParamsException("Activity content is too long, it should fit in 500 chars");
+    /**
+     * Dodaje na tablicy aktualnie zalogowanego użytkownika wpis o treści $content Dodatkowo możesz zawęzić widoczność
+     * wpisu wypisu wyłącznie dla znajomych użytkownika, ustawiając parametr $only_friends na true
+     *
+     * @since 1.1
+     *
+     * @param $content
+     * @param bool $only_friends
+     *
+     * @return bool
+     *
+     * @throws NKServiceInvalidParamsException
+     */
+    public function postActivity($content, $only_friends = false)
+    {
+        $this->check_activity_content_length($content);
+
+        $url = '/activities/@me/' . ($only_friends ? '@friends' : '@all') . '/app.sledzik';
+        $this->call($url, array('title' => $content), NKHttpClient::HTTP_POST);
+
+        return true;
     }
 
-    $url = '/activities/@me/' . ($only_friends ? '@friends' : '@all') . '/app.sledzik';
-    $this->call($url, array('title' => $content), NKHttpClient::HTTP_POST);
+    /**
+     * Dodaje na tablicy grupy $group_id wpis o treści $content w imieniu aktualnie zalogowanego użytkownika.
+     *
+     * @since 1.3
+     *
+     * @param string $content
+     * @param string $group_id
+     *
+     * @return bool
+     *
+     * @throws NKServiceInvalidParamsException
+     */
+    public function postGroupActivity($content, $group_id) {
+        $this->check_activity_content_length($content);
 
-    return true;
-  }
+        $url = "/nkgroups/activity/@me/@all/{$group_id}";
+        $this->call($url, array('title' => $content), NKHttpClient::HTTP_POST);
+
+        return true;
+    }
+
+    protected function check_activity_content_length($content) {
+        $length = strlen($content);
+        if ($length < 1) {
+            throw new NKServiceInvalidParamsException("Activity content is too short, it should have at least 1 char");
+        } elseif ($length > 500) {
+            throw new NKServiceInvalidParamsException("Activity content is too long, it should fit in 500 chars");
+        }
+    }
 
   /**
    * @return NKHttpClient

@@ -1,7 +1,7 @@
 PHP SDK dla otwartego API portalu NK.pl
 =======================================
 
-Aktualna wersja to 1.2, 'master' jest gałęzią developerską, gałęzie stabilne znajdują się w branchach
+Aktualna wersja to 1.3, 'master' jest gałęzią developerską, gałęzie stabilne znajdują się w branchach
 z numerami wersji.
 
 Przykłady
@@ -18,6 +18,10 @@ FAQ a także dokumentacji.
 
 Changelog
 ---------
+1.3
+
+* Dodano serwis dodawania wpisów przez użytkownika na grupę
+
 1.2
 
 * Dodano automatyczne odświeżanie tokena
