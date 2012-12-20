@@ -413,7 +413,7 @@ class NKService
     public function postGroupActivity($content, $group_id) {
         $this->check_activity_content_length($content);
 
-        $url = "/nkgroups/activity/@me/@all/{$group_id}";
+        $url = "/activities/nkgroup/@me/@all/{$group_id}";
         $this->call($url, array('title' => $content), NKHttpClient::HTTP_POST);
 
         return true;
