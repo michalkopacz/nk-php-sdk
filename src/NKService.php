@@ -392,7 +392,7 @@ class NKService
     {
         $this->check_activity_content_length($content);
 
-        $url = '/activities/@me/' . ($only_friends ? '@friends' : '@all') . '/app.sledzik';
+        $url = '/nkactivities/@me/' . ($only_friends ? '@friends' : '@all') . '/app.sledzik';
         $this->call($url, array('title' => $content), NKHttpClient::HTTP_POST);
 
         return true;
