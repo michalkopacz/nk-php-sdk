@@ -392,7 +392,7 @@ class NKService
     {
         $this->check_activity_content_length($content);
 
-        $url = '/nkactivities/@me/' . ($only_friends ? '@friends' : '@all') . '/app.sledzik';
+        $url = '/activities/@me/' . ($only_friends ? '@friends' : '@all') . '/app.sledzik';
         $this->call($url, array('title' => $content), NKHttpClient::HTTP_POST);
 
         return true;
@@ -413,7 +413,7 @@ class NKService
     public function postGroupActivity($content, $group_id) {
         $this->check_activity_content_length($content);
 
-        $url = "/activities/nkgroup/@me/@all/{$group_id}";
+        $url = "/nkactivities/nkgroup/@me/@all/{$group_id}";
         $this->call($url, array('title' => $content), NKHttpClient::HTTP_POST);
 
         return true;
